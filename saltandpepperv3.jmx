@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="saltandpepper Scaper for peviitor" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -202,14 +202,13 @@
               <stringProp name="TestPlan.comments">Created from cURL on 2022-01-18T17:49:23.5318625</stringProp>
             </HeaderManager>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="job" enabled="false">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">job</stringProp>
-              <stringProp name="RegexExtractor.regex">&quot;et_pb_text_inner&quot;&gt;&lt;p&gt;(.*)Â &lt;span style=&quot;color: #e44257;&quot;&gt;(.*)&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$ $2$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">-1</stringProp>
-            </RegexExtractor>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="set response encoding to UTF-8" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">prev.setDataEncoding(&quot;UTF-8&quot;)</stringProp>
+            </JSR223PostProcessor>
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="job" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
