@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="saltandpepper Scaper for peviitor" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -56,7 +56,7 @@
         <hashTree/>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Clean all data from peviitor" enabled="true"/>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/v1/clean/" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/v3/clean/" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="company" elementType="HTTPArgument">
@@ -202,7 +202,7 @@
               <stringProp name="TestPlan.comments">Created from cURL on 2022-01-18T17:49:23.5318625</stringProp>
             </HeaderManager>
             <hashTree/>
-            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="set response encoding to UTF-8" enabled="true">
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="set response to UTF-8" enabled="true">
               <stringProp name="scriptLanguage">groovy</stringProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
@@ -213,7 +213,7 @@
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="job" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">job</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;p&gt;(.*)&lt;span style=&quot;color: #e44257;&quot;&gt;(.*)&lt;/span&gt;&lt;/p&gt;</stringProp>
+              <stringProp name="RegexExtractor.regex">&lt;p&gt;(.+?)&lt;span style=&quot;color:(.+?)&lt;\/span&gt;</stringProp>
               <stringProp name="RegexExtractor.template">$1$$2$</stringProp>
               <stringProp name="RegexExtractor.default"></stringProp>
               <stringProp name="RegexExtractor.match_number">-1</stringProp>
@@ -238,6 +238,37 @@
             <boolProp name="ForeachController.useSeparator">true</boolProp>
           </ForeachController>
           <hashTree>
+            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+              <boolProp name="WAITING">false</boolProp>
+              <boolProp name="SUCCESFULL">true</boolProp>
+              <stringProp name="RESPONSE_CODE">200</stringProp>
+              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+              <stringProp name="REQUEST_DATA"></stringProp>
+              <stringProp name="RESPONSE_DATA">${title}</stringProp>
+              <stringProp name="RESPONSE_TIME">0</stringProp>
+              <stringProp name="LATENCY">0</stringProp>
+              <stringProp name="CONNECT">0</stringProp>
+              <stringProp name="URL"></stringProp>
+              <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            </kg.apc.jmeter.samplers.DummySampler>
+            <hashTree>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">var x=vars.get(&quot;title&quot;);
+
+x=x.replace(&apos;#e44257;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span style=&quot;color: &apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot; style=&quot;color: &apos;,&apos;&apos;).replace(&apos;#333333;&quot;&gt;&amp;#8211;&apos;,&apos;&apos;).replace(&apos;&amp;amp;&apos;,&apos;&amp;&apos;).replace(&apos;#000000;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot;&gt;&apos;,&apos;&apos;);
+
+
+vars.put(&quot;xtitle&quot;,x);
+
+y=vars.get(&quot;xtitle&quot;);
+log.info(y);</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+            </hashTree>
             <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="define an index for each job description page" enabled="true">
               <stringProp name="CounterConfig.start">1</stringProp>
               <stringProp name="CounterConfig.end"></stringProp>
@@ -256,7 +287,7 @@
               <stringProp name="REQUEST_DATA"></stringProp>
               <stringProp name="RESPONSE_DATA">{
 &quot;id&quot;: &quot;${__UUID}&quot;,
-&quot;job_title&quot;: &quot;${__V(job_${k},)}&quot;,
+&quot;job_title&quot;: &quot;${xtitle}&quot;,
 &quot;job_link&quot;: &quot;${__V(link_${k},)}&quot;,
 &quot;company&quot;: &quot;${company}&quot;,
 &quot;city&quot;: &quot;${city}&quot;,
@@ -285,7 +316,7 @@ vars.putObject(&quot;jobList&quot;, jobList)</stringProp>
         </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Update jobs to peviitor" enabled="true"/>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/v1/update/" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/v3/update/" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
