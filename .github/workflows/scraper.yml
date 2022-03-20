@@ -37,7 +37,7 @@ jobs:
           java -version
           wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
           unzip apache-jmeter-5.4.3.zip
-          cd apache-jmeter-5.4/bin
+          cd apache-jmeter-5.4.3/bin
           ./jmeter -v
           pwd
           
