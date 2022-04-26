@@ -209,7 +209,7 @@
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="job" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">job</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;p&gt;(.+?)&lt;span style=&quot;color:(.+?)&lt;\/span&gt;</stringProp>
+              <stringProp name="RegexExtractor.regex">&lt;(?:div class=&quot;et_pb_text_inner&quot;|p)&gt;(.+?)&lt;span style=&quot;color:(.+?)&lt;\/span&gt;&lt;</stringProp>
               <stringProp name="RegexExtractor.template">$1$$2$</stringProp>
               <stringProp name="RegexExtractor.default"></stringProp>
               <stringProp name="RegexExtractor.match_number">-1</stringProp>
@@ -254,8 +254,7 @@
                 <stringProp name="filename"></stringProp>
                 <stringProp name="cacheKey">true</stringProp>
                 <stringProp name="script">var x=vars.get(&quot;title&quot;);
-
-x=x.replace(&apos;#e44257;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span style=&quot;color: &apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot; style=&quot;color: &apos;,&apos;&apos;).replace(&apos;#333333;&quot;&gt;&amp;#8211;&apos;,&apos;&apos;).replace(&apos;&amp;amp;&apos;,&apos;&amp;&apos;).replace(&apos;#000000;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot;&gt;&apos;,&apos;&apos;);
+x=x.replace(&apos;#e44257;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span style=&quot;color: &apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot; style=&quot;color: &apos;,&apos;&apos;).replace(&apos;#333333;&quot;&gt;&amp;#8211;&apos;,&apos;&apos;).replace(&apos;&amp;amp;&apos;,&apos;&amp;&apos;).replace(&apos;#000000;&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&lt;span color=&quot;#e44257&quot;&gt;&apos;,&apos;&apos;).replace(&apos;&amp;nbsp;&apos;,&apos;&apos;).replace(&apos;&lt;p&gt;&apos;,&apos;&apos;).replace(&apos; #333333;&quot;&gt;&apos;,&apos;&apos;);
 
 
 vars.put(&quot;xtitle&quot;,x);
